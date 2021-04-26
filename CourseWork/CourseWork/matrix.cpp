@@ -1,5 +1,6 @@
 #include "matrix.h"
 #include "Validator.h"
+#include "View.h"
 
 double** matrix::multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, int n2, int m2)
 {
@@ -40,25 +41,42 @@ double** matrix::crIdentityMatrix(int n)
 	return Matr;
 }
 
-double** matrix::calculateMatrixB(double** Matr, int n)
+double** matrix::calculateMatrixB(double** Matr, int n, int stage)
 {
 	double** MatrB = crIdentityMatrix(n);
 	for (int j = 0; j < n; j++) {
-		if (j == n - 2) {
-			MatrB[n - 2][n - 2] = 1 / (Matr[n-1][n - 2]);
+		if (j == n - stage-1) {
+			MatrB[n - stage - 1][n - stage - 1] = 1 / (Matr[n-stage][n - stage - 1]);
 		}
 		else {
-			MatrB[n - 2][j] = -1 * (Matr[n-1][j] / Matr[n-1][n - 2]);
+			MatrB[n - stage - 1][j] = -1 * (Matr[n-stage][j] / Matr[n-stage][n - stage - 1]);
 		}
 	}
 	return MatrB;
 }
 
-double** matrix::calculateMatrixBReverse(double** Matr, int n)
+double** matrix::calculateMatrixBReverse(double** Matr, int n,int stage)
 {
 	double** MatrReverse = crIdentityMatrix(n);
 	for (int i = 0; i < n; i++) {
-		MatrReverse[n-2][i] = Matr[n - 1][i];
+		MatrReverse[n-stage -1 ][i] = Matr[n - stage][i];
 	}
 	return MatrReverse;
+}
+double** matrix::calculateMatrixP(double** Matr, int n) {
+	//add Matr copy
+	double** MatrD = Matr;
+	for (int i = 1; i < n; i++) {
+		double** MatrB = calculateMatrixB(Matr, n,i);
+		cout << "B:" << endl;
+		View::outputMatr(MatrB, n, n);
+		double** MatrBReverse = calculateMatrixBReverse(Matr, n,i);
+		cout << "B reverse:" << endl;
+		View::outputMatr(MatrBReverse, n, n);
+		MatrD = matrix::multiplyMatrix(matrix::multiplyMatrix(MatrBReverse, n, n, Matr, n, n), n, n, MatrB, n, n);
+		Matr = MatrD;
+		cout << "D:" << endl;
+		View::outputMatr(MatrD, n, n);
+	}
+	return MatrD;
 }
