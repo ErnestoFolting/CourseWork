@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClCompile Include="CourseWork.cpp" />
     <ClCompile Include="fileReader.cpp" />
+    <ClCompile Include="matrix.cpp" />
     <ClCompile Include="Validator.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fileReader.h" />
+    <ClInclude Include="matrix.h" />
     <ClInclude Include="Validator.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>

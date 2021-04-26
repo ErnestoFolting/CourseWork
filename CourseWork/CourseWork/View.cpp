@@ -9,3 +9,13 @@ void View::outputMatr(double** Matr, int n, int m)
         cout << endl;
     }
 }
+
+void View::canNotOpenAFile()
+{
+    cout << " Can not open a file to read. \n";
+}
+
+void View::canNotMultiplyMatrix()
+{
+    cout << "Can not multiply matrix\n";
+}
