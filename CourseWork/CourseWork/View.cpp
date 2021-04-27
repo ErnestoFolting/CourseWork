@@ -5,7 +5,7 @@ void View::outputMatr(double** Matr, int n, int m)
     cout << endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << setw(6) << Matr[i][j];
+            cout << setw(10) << Matr[i][j];
         }
         cout << endl;
     }

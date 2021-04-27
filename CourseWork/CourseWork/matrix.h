@@ -6,6 +6,6 @@ public:
 	static double** crIdentityMatrix(int n);
 	static double** calculateMatrixB(double** Matr, int n, int stage);
 	static double** calculateMatrixBReverse(double** Matr, int n,int stage);
-	static double** calculateMatrixP(double** Matr, int n);
+	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
 };
 

@@ -11,11 +11,13 @@ double** matrix::multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, 
 		}
 		for (int i = 0; i < n1; i++) {
 			for (int j = 0; j < m2; j++) {
-				double el = 0;
+				Matr[i][j] = 0;
 				for (int k = 0; k < n2; k++) {
-					el += Matr1[i][k] * Matr2[k][j];
+					Matr[i][j] += Matr1[i][k] * Matr2[k][j];
+					if (abs(Matr[i][j] - static_cast<int>(Matr[i][j])) < 0.00001) {
+						Matr[i][j] = static_cast<int>(Matr[i][j]);
+					}
 				}
-				Matr[i][j] = el;
 			}
 		}
 		return Matr;
@@ -63,11 +65,15 @@ double** matrix::calculateMatrixBReverse(double** Matr, int n,int stage)
 	}
 	return MatrReverse;
 }
-double** matrix::calculateMatrixP(double** Matr, int n) {
+double** matrix::calculateMatrixP(double** Matr, double**& similarMatrix, int n) {
 	//add Matr copy
 	double** MatrD = Matr;
+	int k = 0;
 	for (int i = 1; i < n; i++) {
-		double** MatrB = calculateMatrixB(Matr, n,i);
+		double** MatrB = calculateMatrixB(Matr, n, i);
+		if (k >= 1) {
+			similarMatrix = matrix::multiplyMatrix(similarMatrix, n, n, MatrB, n, n);
+		}
 		cout << "B:" << endl;
 		View::outputMatr(MatrB, n, n);
 		double** MatrBReverse = calculateMatrixBReverse(Matr, n,i);
@@ -77,6 +83,7 @@ double** matrix::calculateMatrixP(double** Matr, int n) {
 		Matr = MatrD;
 		cout << "D:" << endl;
 		View::outputMatr(MatrD, n, n);
+		k++;
 	}
 	return MatrD;
 }
