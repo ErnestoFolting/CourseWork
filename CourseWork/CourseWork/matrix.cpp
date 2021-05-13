@@ -1,7 +1,8 @@
 #include "matrix.h"
 #include "Validator.h"
+#include <complex>
 #include "View.h"
-
+typedef std::complex<double> complex;
 double** matrix::multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, int n2, int m2)
 {
 	if (Validator::canMultiplyMatrix(m1, n2)) {
@@ -86,4 +87,16 @@ double** matrix::calculateMatrixP(double** Matr, double**& similarMatrix, int n)
 		k++;
 	}
 	return MatrD;
+}
+void matrix::createSelfVectors(Root roots) {
+	for (int i = 0; i < roots.num; i++) {
+		double** tempMatr = new double*[roots.num];
+		for (int j = 0; j < roots.num; j++) {
+			tempMatr[j] = new double[1];
+		}
+		for (int k = 0; k < roots.num; k++) {
+			tempMatr[k] = pow(real(roots.mas[i]), roots.num - k - 1);
+		}
+		View::outputMatr(tempMatr, roots.num, 1);
+	}
 }

@@ -1,5 +1,5 @@
 #include "View.h"
-
+using namespace std;
 void View::outputMatr(double** Matr, int n, int m)
 {
     cout << endl;

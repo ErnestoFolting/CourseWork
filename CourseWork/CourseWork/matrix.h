@@ -1,4 +1,6 @@
 #pragma once
+#include "Root.h"
+
 class matrix
 {
 public:
@@ -7,5 +9,6 @@ public:
 	static double** calculateMatrixB(double** Matr, int n, int stage);
 	static double** calculateMatrixBReverse(double** Matr, int n,int stage);
 	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
+	static void createSelfVectors(Root roots);
 };
 
