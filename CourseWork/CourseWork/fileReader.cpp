@@ -13,7 +13,7 @@ double** fileReader::inputMatr(int& n)
     if (Validator::fileOpenCheck(inFile)) {
         double tempNum;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++) {   
                 inFile >> tempNum;
                 Matr[i][j] = tempNum;
             }

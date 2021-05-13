@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="fileReader.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="Polinom.h" />
     <ClInclude Include="Validator.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
