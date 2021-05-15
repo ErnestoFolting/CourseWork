@@ -115,3 +115,17 @@ void matrix::toNorm(double** Matr, int rows) {
 		Matr[i][0] = round(Matr[i][0] / sum*1000)/1000;
 	}
 }
+void matrix::findY(double** Matr, int rows, int columns) {
+	double** startVector = new double* [rows];
+	for (int i = 0; i < rows; i++) {
+		startVector[i] = new double[1];
+	}
+	for (int i = 0; i < rows; i++) {
+		startVector[i][0] = rand() % 2;
+	}
+	View::outputMatr(startVector, rows, 1);
+	for (int i = 0; i < rows; i++) {
+		startVector = matrix::multiplyMatrix(Matr, rows, columns, startVector, rows, 1);
+		View::outputMatr(startVector, rows, 1);
+	}
+}

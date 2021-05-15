@@ -11,5 +11,6 @@ public:
 	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
 	static void createSelfVectors(Root roots, double** MatrB);
 	static void toNorm(double** Matr, int rows);
+	static void findY(double** Matr, int rows, int columns);
 };
 
