@@ -15,10 +15,8 @@ double** matrix::multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, 
 				Matr[i][j] = 0;
 				for (int k = 0; k < n2; k++) {
 					Matr[i][j] += Matr1[i][k] * Matr2[k][j];
-					if (abs(Matr[i][j] - static_cast<int>(Matr[i][j])) < 0.00001) {
-						Matr[i][j] = static_cast<int>(Matr[i][j]);
-					}
 				}
+				Matr[i][j] = round(Matr[i][j] * 1000) / 1000;
 			}
 		}
 		return Matr;
@@ -88,15 +86,32 @@ double** matrix::calculateMatrixP(double** Matr, double**& similarMatrix, int n)
 	}
 	return MatrD;
 }
-void matrix::createSelfVectors(Root roots) {
+void matrix::createSelfVectors(Root roots,double** MatrB) {
 	for (int i = 0; i < roots.num; i++) {
 		double** tempMatr = new double*[roots.num];
 		for (int j = 0; j < roots.num; j++) {
 			tempMatr[j] = new double[1];
 		}
 		for (int k = 0; k < roots.num; k++) {
-			tempMatr[k] = pow(real(roots.mas[i]), roots.num - k - 1);
-		}
+			double temp = round(real(roots.mas[i])*1000)/1000;
+			cout << endl << "temp: " << temp << endl;
+			tempMatr[k][0] = pow(temp, roots.num - k - 1);
+		}cout << "Y" << i+1 << ":" << endl;
 		View::outputMatr(tempMatr, roots.num, 1);
+		double** tempMatr2 = matrix::multiplyMatrix(MatrB, 4, 4, tempMatr, 4, 1);
+		View::outputMatr(tempMatr2, 4, 1);
+		matrix::toNorm(tempMatr2, 4);
+		View::outputMatr(tempMatr2, 4, 1);
+	}
+}
+void matrix::toNorm(double** Matr, int rows) {
+	double sum = 0;
+	for (int i = 0; i < rows; i++) {
+		sum += pow(Matr[i][0], 2);
+	}
+	sum = sqrt(sum);
+	cout << "sum " << sum << endl;
+	for (int i = 0; i < rows; i++) {
+		Matr[i][0] = round(Matr[i][0] / sum*1000)/1000;
 	}
 }

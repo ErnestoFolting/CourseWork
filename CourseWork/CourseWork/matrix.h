@@ -9,6 +9,7 @@ public:
 	static double** calculateMatrixB(double** Matr, int n, int stage);
 	static double** calculateMatrixBReverse(double** Matr, int n,int stage);
 	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
-	static void createSelfVectors(Root roots);
+	static void createSelfVectors(Root roots, double** MatrB);
+	static void toNorm(double** Matr, int rows);
 };
 

@@ -24,5 +24,5 @@ int main()
 	Polinom p(MatrP, n);
 	Root r;
 	Polinom::FindAllRoot(p, r);
-	matrix::createSelfVectors(r);
+	matrix::createSelfVectors(r, similarMatrix);
 }

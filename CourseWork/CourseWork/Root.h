@@ -1,10 +1,10 @@
 #pragma once
 #define NMAX 20
 #include <complex>
-typedef std::complex<double> complex;
+typedef std::complex<double> complexD;
 class Root
 {
 public:
-    complex  mas[NMAX];
+    complexD mas[NMAX];
     int num;
 };
