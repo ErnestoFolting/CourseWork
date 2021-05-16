@@ -1,5 +1,6 @@
 #pragma once
 #include "Root.h"
+#include <vector>
 
 class matrix
 {
@@ -11,7 +12,8 @@ public:
 	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
 	static void createSelfVectors(Root roots, double** MatrB);
 	static void toNorm(double** Matr, int rows);
-	static double** findSystem(double** Matr, int rows, int columns);
+	static double** findSystem(double** Matr, int rows);
+	static std::vector<double>Kramer(double** Matr, int rows);
 	static double det(double** matr, int N);
 };
 

@@ -29,6 +29,7 @@ int main()
 	int n;
 	double** Matr = fileReader::inputMatr(n);
 	View::outputMatr(Matr, n, n);
-	matrix::findSystem(Matr, n, n);
+	double** system = matrix::findSystem(Matr, n);
+	matrix::Kramer(system, n);
 	//matrix::findY(Matr, n, n );
 }

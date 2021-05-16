@@ -1,6 +1,7 @@
 #include "matrix.h"
 #include "Validator.h"
 #include <complex>
+#include <vector>
 #include "View.h"
 typedef std::complex<double> complex;
 double** matrix::multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, int n2, int m2)
@@ -115,7 +116,7 @@ void matrix::toNorm(double** Matr, int rows) {
 		Matr[i][0] = round(Matr[i][0] / sum*1000)/1000;
 	}
 }
-double** matrix::findSystem(double** Matr, int rows, int columns) {
+double** matrix::findSystem(double** Matr, int rows) {
 	double** startVector = new double* [rows];
 	double** system = new double* [rows];
 	for (int i = 0; i < rows; i++) {
@@ -131,7 +132,7 @@ double** matrix::findSystem(double** Matr, int rows, int columns) {
 	}
 	View::outputMatr(startVector, rows, 1);
 	for (int i = 0; i < rows; i++) {
-		startVector = matrix::multiplyMatrix(Matr, rows, columns, startVector, rows, 1);
+		startVector = matrix::multiplyMatrix(Matr, rows, rows, startVector, rows, 1);
 		View::outputMatr(startVector, rows, 1);
 		for (int j = 0; j < rows; j++) {
 			system[j][(rows - 2) - i] = startVector[j][0];
@@ -143,17 +144,50 @@ double** matrix::findSystem(double** Matr, int rows, int columns) {
 	View::outputMatr(system, rows, rows+1);
 	return system;
 }
-
-double matrix::det(double** matr, int N)
+vector<double> matrix::Kramer(double** Matr,int rows ) {
+	vector<double> p;
+	double** roots = new double* [rows];
+	double** main = new double* [rows];
+	for (int i = 0; i < rows; i++) {
+		roots[i] = new double[1];
+		roots[i][0] = Matr[i][rows];
+		main[i] = new double[rows];
+		for (int j = 0; j < rows; j++) {
+			main[i][j] = Matr[i][j];
+		}
+	}
+	double mainDet = det(main, rows);
+	View::outputMatr(roots, rows, 1);
+	View::outputMatr(main, rows, rows);
+	for (int l = 0; l < rows; l++) {
+		double** tempMatr = new double* [rows];
+		for (int k = 0; k < rows; k++)tempMatr[k] = new double[rows];
+		for (int j = 0; j < rows; j++) {
+			for (int i = 0; i < rows; i++) {
+				if (j != l) {
+					tempMatr[i][j] = main[i][j];
+				}
+				else {
+					tempMatr[i][j] = roots[i][0];
+				}
+			}
+		}
+		double tempDet = det(tempMatr, rows);
+		double root = round(tempDet / mainDet*1000)/1000;
+		cout << root << endl;
+	}
+	return p;
+}
+double matrix::det(double** Matr, int N)
 {
 	double determ;
 	int sub, s;
 	double** Matr2;
 	if (N < 1) return nan("1");
 	if (N == 1)
-		return matr[0][0];
+		return Matr[0][0];
 	if (N == 2)
-		return matr[0][0] * matr[1][1] - matr[0][1] * matr[1][0];
+		return Matr[0][0] * Matr[1][1] - Matr[0][1] * Matr[1][0];
 	else {
 
 		Matr2 = new double* [N - 1];
@@ -164,9 +198,9 @@ double matrix::det(double** matr, int N)
 			sub = 0;
 			for (int j = 0; j < N; j++)
 				if (i != j)
-					Matr2[sub++] = matr[j] + 1;
+					Matr2[sub++] = Matr[j] + 1;
 
-			determ = determ + s * matr[i][0] * det(Matr2, N - 1);
+			determ = determ + s * Matr[i][0] * det(Matr2, N - 1);
 			s = -s;
 		};
 		delete[] Matr2;
