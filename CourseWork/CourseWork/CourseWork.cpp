@@ -7,6 +7,7 @@
 #include "Polinom.h"
 #include "Root.h"
 #include <complex>
+
 #define NMAX 30
 typedef std::complex<double> complex;
 
@@ -28,5 +29,6 @@ int main()
 	int n;
 	double** Matr = fileReader::inputMatr(n);
 	View::outputMatr(Matr, n, n);
-	matrix::findY(Matr, n, n );
+	matrix::findSystem(Matr, n, n);
+	//matrix::findY(Matr, n, n );
 }

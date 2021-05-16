@@ -115,17 +115,61 @@ void matrix::toNorm(double** Matr, int rows) {
 		Matr[i][0] = round(Matr[i][0] / sum*1000)/1000;
 	}
 }
-void matrix::findY(double** Matr, int rows, int columns) {
+double** matrix::findSystem(double** Matr, int rows, int columns) {
 	double** startVector = new double* [rows];
+	double** system = new double* [rows];
 	for (int i = 0; i < rows; i++) {
 		startVector[i] = new double[1];
+		system[i] = new double[rows + 1];
 	}
 	for (int i = 0; i < rows; i++) {
-		startVector[i][0] = rand() % 2;
+		cout << "Input start vector:" << endl;
+		cin >> startVector[i][0];
+	}
+	for (int i = 0; i < rows; i++) {
+		system[i][rows - 1] = startVector[i][0];
 	}
 	View::outputMatr(startVector, rows, 1);
 	for (int i = 0; i < rows; i++) {
 		startVector = matrix::multiplyMatrix(Matr, rows, columns, startVector, rows, 1);
 		View::outputMatr(startVector, rows, 1);
+		for (int j = 0; j < rows; j++) {
+			system[j][(rows - 2) - i] = startVector[j][0];
+		}
+	}
+	for (int i = 0; i < rows; i++) {
+		system[i][rows] = startVector[i][0];
+	}
+	View::outputMatr(system, rows, rows+1);
+	return system;
+}
+
+double matrix::det(double** matr, int N)
+{
+	double determ;
+	int sub, s;
+	double** Matr2;
+	if (N < 1) return nan("1");
+	if (N == 1)
+		return matr[0][0];
+	if (N == 2)
+		return matr[0][0] * matr[1][1] - matr[0][1] * matr[1][0];
+	else {
+
+		Matr2 = new double* [N - 1];
+		determ = 0;
+		s = 1;
+		for (int i = 0; i < N; i++)
+		{
+			sub = 0;
+			for (int j = 0; j < N; j++)
+				if (i != j)
+					Matr2[sub++] = matr[j] + 1;
+
+			determ = determ + s * matr[i][0] * det(Matr2, N - 1);
+			s = -s;
+		};
+		delete[] Matr2;
+		return determ;
 	}
 }
