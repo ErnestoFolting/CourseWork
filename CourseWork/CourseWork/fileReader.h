@@ -6,6 +6,6 @@
 class fileReader
 {
 public:
-	static double** inputMatr(int& n);
+	static double** inputMatr(int n);
 };
 

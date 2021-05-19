@@ -226,4 +226,49 @@ void matrix::findQ(vector<double> roots, Root selfNumbers, int rows) {
 		}
 	}
 	View::outputMatr(q, rows, rows);
+	this->q = q;
+}
+
+void matrix::findVectorsX() {
+	
+}
+
+matrix matrix::operator*(double x)
+{
+	matrix newMatr(rows, columns);
+	newMatr.Matr = new double*[rows];
+	cout << "Check" << endl;
+	for (int i = 0; i < rows; i++){
+		newMatr.Matr[i] = new double[columns];
+		for (int j = 0; j < columns; j++) {
+			newMatr.Matr[i][j] = this->Matr[i][j] * x;
+		}
+	}
+	return newMatr;
+}
+
+matrix matrix::operator+(matrix tempMatr)
+{
+	matrix newMatr(rows, columns);
+	newMatr.Matr = new double* [rows];
+	for (int i = 0; i < rows; i++) {
+		newMatr.Matr[i] = new double[columns];
+		for (int j = 0; j < columns; j++) {
+			newMatr.Matr[i][j] = Matr[i][j] + tempMatr.Matr[i][j];
+		}
+	}
+	return newMatr;
+}
+
+matrix matrix::operator-(matrix tempMatr)
+{
+	matrix newMatr(rows, columns);
+	newMatr.Matr = new double* [rows];
+	for (int i = 0; i < rows; i++) {
+		newMatr.Matr[i] = new double[columns];
+		for (int j = 0; j < columns; j++) {
+			newMatr.Matr[i][j] = Matr[i][j] - tempMatr.Matr[i][j];
+		}
+	}
+	return newMatr;
 }
