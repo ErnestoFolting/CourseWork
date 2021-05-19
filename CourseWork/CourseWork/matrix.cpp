@@ -174,7 +174,7 @@ vector<double> matrix::Kramer(double** Matr,int rows ) {
 		}
 		double tempDet = det(tempMatr, rows);
 		double root = round(tempDet / mainDet*1000)/1000;
-		cout << root << endl;
+		p.push_back(root);
 	}
 	return p;
 }
@@ -206,4 +206,21 @@ double matrix::det(double** Matr, int N)
 		delete[] Matr2;
 		return determ;
 	}
+}
+void matrix::findQ(vector<double> roots, Root selfNumbers, int rows) {
+	double** q = new double* [rows];
+	for (int i = 0; i < rows; i++) {
+		q[i] = new double[rows];
+	}
+	for (int j = 0; j < rows; j++) {
+		for (int i = 0; i < rows; i++) {
+			if (i == 0) {
+				q[i][j] = 1;
+			}
+			else {
+				q[i][j] = real(selfNumbers.mas[j]) * q[i - 1][j] - roots[i-1];
+			}
+		}
+	}
+	View::outputMatr(q, rows, rows);
 }

@@ -51,3 +51,14 @@ Polinom::Polinom(double** Matr, int columns) {
     }
     mas[columns] = 1;
 }
+
+Polinom::Polinom(std::vector<double> p)
+{
+    n = p.size();
+    int k = 0;
+    for (int i = p.size() - 1; i >= 0; i--) {
+        mas[k] = (-1) * p[i];
+        k++;
+    }
+    mas[p.size()] = 1;
+}

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <complex>
+#include <vector>
 #include "Root.h"
 typedef std::complex<double> complex;
 #define NMAX 20
@@ -13,6 +14,8 @@ public:
     static complex FPol(Polinom& p, complex& x);
     static void FindAllRoot(Polinom& pp, Root& r);
     Polinom(double** Matr, int n);
-    Polinom():n(0){};
+    Polinom(std::vector<double>);
+    Polinom() :n(0) {};
+
 };
 

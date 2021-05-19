@@ -15,5 +15,6 @@ public:
 	static double** findSystem(double** Matr, int rows);
 	static std::vector<double>Kramer(double** Matr, int rows);
 	static double det(double** matr, int N);
+	static void findQ(std::vector<double> roots, Root selfNumbers, int rows);
 };
 
