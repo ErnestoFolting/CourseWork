@@ -116,33 +116,36 @@ void matrix::toNorm(double** Matr, int rows) {
 		Matr[i][0] = round(Matr[i][0] / sum*1000)/1000;
 	}
 }
-double** matrix::findSystem(double** Matr, int rows) {
-	double** startVector = new double* [rows];
+void matrix::findSystem(double** Matr, int rows) {
+	double** startVector2 = new double* [rows];
 	double** system = new double* [rows];
 	for (int i = 0; i < rows; i++) {
-		startVector[i] = new double[1];
+		startVector2[i] = new double[1];
 		system[i] = new double[rows + 1];
 	}
 	for (int i = 0; i < rows; i++) {
 		cout << "Input start vector:" << endl;
-		cin >> startVector[i][0];
+		cin >> startVector2[i][0];
+		startVector.push_back(startVector2[i][0]);
 	}
 	for (int i = 0; i < rows; i++) {
-		system[i][rows - 1] = startVector[i][0];
+		system[i][rows - 1] = startVector2[i][0];
 	}
-	View::outputMatr(startVector, rows, 1);
+	View::outputMatr(startVector2, rows, 1);
 	for (int i = 0; i < rows; i++) {
-		startVector = matrix::multiplyMatrix(Matr, rows, rows, startVector, rows, 1);
-		View::outputMatr(startVector, rows, 1);
+		startVector2 = matrix::multiplyMatrix(Matr, rows, rows, startVector2, rows, 1);
+		View::outputMatr(startVector2, rows, 1);
+		vectorsY.push_back(startVector2);
 		for (int j = 0; j < rows; j++) {
-			system[j][(rows - 2) - i] = startVector[j][0];
+			system[j][(rows - 2) - i] = startVector2[j][0];
 		}
 	}
 	for (int i = 0; i < rows; i++) {
-		system[i][rows] = startVector[i][0];
+		system[i][rows] = startVector2[i][0];
 	}
+	cout << "Check " << endl;
 	View::outputMatr(system, rows, rows+1);
-	return system;
+	this->system = system;
 }
 vector<double> matrix::Kramer(double** Matr,int rows ) {
 	vector<double> p;

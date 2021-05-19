@@ -11,6 +11,13 @@ void View::outputMatr(double** Matr, int n, int m)
     }
 }
 
+void View::outputVector(vector<double> tempVector)
+{
+    for (int i = 0; i < tempVector.size(); i++) {
+        cout << tempVector[i] << endl;
+    }
+}
+
 void View::canNotOpenAFile()
 {
     cout << " Can not open a file to read. \n";

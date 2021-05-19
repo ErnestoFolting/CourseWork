@@ -30,8 +30,14 @@ int main()
 	int n;
 	double** Matr = fileReader::inputMatr(n);
 	View::outputMatr(Matr, n, n);
-	double** system = matrix::findSystem(Matr, n);
-	std::vector<double> roots = matrix::Kramer(system, n);
+	matrix Matrix;
+	Matrix.findSystem(Matr, n);
+	std::vector<double> roots = matrix::Kramer(Matrix.system, n);
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 5; j++) {
+			std::cout << Matrix.system[i][j] << std:: endl;
+		}
+	}
 	for (int i = 0; i < roots.size(); i++) {
 		std::cout << "Root:" << roots[i] << std::endl;
 	}
@@ -44,4 +50,5 @@ int main()
 		//matrix::findY(Matr, n, n );
 	} 
 	matrix::findQ(roots, r, n);
+	View::outputMatr(Matrix.vectorsY[0], n, 1);
 }
