@@ -31,30 +31,27 @@ int main()
 	std::cin >> n;
 	srand(time(0));
 	matrix Matrix(n);
-	matrix Matrix2(n);
 	Matrix.Matr = fileReader::inputMatr(Matrix.rows);
-	Matrix2.Matr = fileReader::inputMatr(Matrix2.rows);
 	View::outputMatr(Matrix.Matr, n, n);
-	matrix tempMatr = Matrix - Matrix*2 ;
-	View::outputMatr(tempMatr.Matr, tempMatr.rows, tempMatr.columns);
-	//Matrix.findSystem(Matrix.Matr, n);
-	//std::vector<double> roots = matrix::Kramer(Matrix.system, n);
-	//for (int i = 0; i < 4; i++) {
-	//	for (int j = 0; j < 5; j++) {
-	//		std::cout << Matrix.system[i][j] << std:: endl;
-	//	}
-	//}
-	//for (int i = 0; i < roots.size(); i++) {
-	//	std::cout << "Root:" << roots[i] << std::endl;
-	//}
-	//Polinom polinom(roots);
-	//Root r;
-	//Polinom::FindAllRoot(polinom, r);
-	//for (int k = 0; k < r.num; k++) {
-	//	double temp = round(real(r.mas[k]) * 1000) / 1000;
-	//	std::cout << std::endl << "temp: " << temp << std::endl;
-	//	//matrix::findY(Matr, n, n );
-	//} 
-	////matrix::findQ(roots, r, n);
-	//View::outputMatr(Matrix.vectorsY[0], n, 1);
+	Matrix.findSystem(Matrix.Matr, n);
+	std::vector<double> roots = matrix::Kramer(Matrix.system, n);
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 5; j++) {
+			std::cout << Matrix.system[i][j] << std:: endl;
+		}
+	}
+	for (int i = 0; i < roots.size(); i++) {
+		std::cout << "Root:" << roots[i] << std::endl;
+	}
+	Polinom polinom(roots);
+	Root r;
+	Polinom::FindAllRoot(polinom, r);
+	for (int k = 0; k < r.num; k++) {
+		double temp = round(real(r.mas[k]) * 1000) / 1000;
+		std::cout << std::endl << "temp: " << temp << std::endl;
+		//matrix::findY(Matr, n, n );
+	} 
+	Matrix.findQ(roots, r, n);
+	Matrix.findVectorsX();
+
 }

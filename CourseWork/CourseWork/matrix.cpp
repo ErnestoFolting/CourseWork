@@ -126,8 +126,8 @@ void matrix::findSystem(double** Matr, int rows) {
 	for (int i = 0; i < rows; i++) {
 		cout << "Input start vector:" << endl;
 		cin >> startVector2[i][0];
-		startVector.push_back(startVector2[i][0]);
 	}
+	vectorsY.push_back(startVector2);
 	for (int i = 0; i < rows; i++) {
 		system[i][rows - 1] = startVector2[i][0];
 	}
@@ -230,14 +230,28 @@ void matrix::findQ(vector<double> roots, Root selfNumbers, int rows) {
 }
 
 void matrix::findVectorsX() {
-	
+	for (int i = 0; i < rows; i++) {
+		matrix tempRes(rows,1);
+		for (int k = 0; k < rows; k++) {
+			matrix tempY(rows,1);
+			tempY.Matr = vectorsY[rows - 1 - k];
+			if (k == 0) {
+				tempRes = tempY * q[k][i];
+			}
+			else {
+				tempRes = tempRes + tempY * q[k][i];
+			}
+		}
+		toNorm(tempRes.Matr, rows);
+		View::outputMatr(tempRes.Matr, rows, 1);
+		vectorsX.push_back(tempRes.Matr);
+	}
 }
 
 matrix matrix::operator*(double x)
 {
 	matrix newMatr(rows, columns);
 	newMatr.Matr = new double*[rows];
-	cout << "Check" << endl;
 	for (int i = 0; i < rows; i++){
 		newMatr.Matr[i] = new double[columns];
 		for (int j = 0; j < columns; j++) {

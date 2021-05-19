@@ -8,7 +8,6 @@ public:
 	double** Matr;
 	int rows;
 	int columns;
-	std::vector<double> startVector;
 	double** system;
 	double** q;
 	std::vector<double**> vectorsY;
