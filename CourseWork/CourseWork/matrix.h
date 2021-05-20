@@ -1,12 +1,10 @@
 #pragma once
 #include "Root.h"
+#include "Polinom.h"
 #include <vector>
 
 class matrix
 {
-public:
-	double** Matr;
-	int rows;
 	int columns;
 	double** system;
 	std::vector<double> p;
@@ -14,6 +12,9 @@ public:
 	Root r;
 	std::vector<double**> vectorsY;
 	std::vector<double**> vectorsX;
+public:
+	double** Matr;
+	int rows;
 	matrix(int n):rows(n),columns(n){}
 	matrix(int n, int m):rows(n),columns(m){}
 	static double** multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, int n2, int m2);
@@ -23,10 +24,11 @@ public:
 	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
 	static void createSelfVectors(Root roots, double** MatrB);
 	static void toNorm(double** Matr, int rows);
+	void findRoots();
 	void findSystem();
 	void Kramer();
 	static double det(double** matr, int N);
-	void findQ(std::vector<double> roots, Root selfNumbers, int rows);
+	void findQ();
 	void findVectorsX();
 	matrix operator*(double x);
 	matrix operator+(matrix tempMatr);

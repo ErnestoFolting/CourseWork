@@ -35,17 +35,7 @@ int main()
 	View::outputMatr(Matrix.Matr, Matrix.rows, Matrix.rows);
 	Matrix.findSystem();
 	Matrix.Kramer();
-	for (int i = 0; i < Matrix.p.size(); i++) {
-		std::cout << "Root: " << Matrix.p[i] << std::endl;
-	}
-	Polinom polinom(Matrix.p);
-	Root r;
-	Polinom::FindAllRoot(polinom, r);
-	for (int k = 0; k < r.num; k++) {
-		double temp = round(real(r.mas[k]) * 1000) / 1000;
-		std::cout << std::endl << "temp: " << temp << std::endl;
-	} 
-	Matrix.findQ(Matrix.p, r, n);
+	Matrix.findRoots();
+	Matrix.findQ();
 	Matrix.findVectorsX();
-
 }

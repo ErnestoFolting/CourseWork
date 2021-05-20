@@ -211,7 +211,7 @@ double matrix::det(double** Matr, int N)
 		return determ;
 	}
 }
-void matrix::findQ(vector<double> roots, Root selfNumbers, int rows) {
+void matrix::findQ() {
 	double** q = new double* [rows];
 	for (int i = 0; i < rows; i++) {
 		q[i] = new double[rows];
@@ -222,7 +222,7 @@ void matrix::findQ(vector<double> roots, Root selfNumbers, int rows) {
 				q[i][j] = 1;
 			}
 			else {
-				q[i][j] = real(selfNumbers.mas[j]) * q[i - 1][j] - roots[i-1];
+				q[i][j] = real(r.mas[j]) * q[i - 1][j] - p[i-1];
 			}
 		}
 	}
@@ -286,4 +286,10 @@ matrix matrix::operator-(matrix tempMatr)
 		}
 	}
 	return newMatr;
+}
+void matrix::findRoots() {
+	Polinom polinom(this->p);
+	Root r;
+	Polinom::FindAllRoot(polinom, r);
+	this->r = r;
 }
