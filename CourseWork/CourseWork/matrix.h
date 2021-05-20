@@ -12,17 +12,21 @@ class matrix
 	Root r;
 	std::vector<double**> vectorsY;
 	std::vector<double**> vectorsX;
+	double** MatrP;
+	double** MatrBN;
+	double** MatrB;
+	int rows;
 public:
 	double** Matr;
-	int rows;
+	int getRows();
 	matrix(int n):rows(n),columns(n){}
 	matrix(int n, int m):rows(n),columns(m){}
 	static double** multiplyMatrix(double** Matr1, int n1, int m1, double** Matr2, int n2, int m2);
 	static double** crIdentityMatrix(int n);
-	static double** calculateMatrixB(double** Matr, int n, int stage);
+	void calculateMatrixB (int stage);
 	static double** calculateMatrixBReverse(double** Matr, int n,int stage);
-	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
-	static void createSelfVectors(Root roots, double** MatrB);
+	void calculateMatrixP();
+	void createSelfVectors();
 	static void toNorm(double** Matr, int rows);
 	void findRoots();
 	void findSystem();

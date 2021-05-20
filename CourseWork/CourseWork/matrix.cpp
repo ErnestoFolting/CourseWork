@@ -43,18 +43,23 @@ double** matrix::crIdentityMatrix(int n)
 	return Matr;
 }
 
-double** matrix::calculateMatrixB(double** Matr, int n, int stage)
+void matrix::calculateMatrixB(int stage)
 {
-	double** MatrB = crIdentityMatrix(n);
-	for (int j = 0; j < n; j++) {
-		if (j == n - stage-1) {
-			MatrB[n - stage - 1][n - stage - 1] = 1 / (Matr[n-stage][n - stage - 1]);
+	MatrB = crIdentityMatrix(rows);
+	for (int j = 0; j < rows; j++) {
+		if (j == rows - stage-1) {
+			MatrB[rows - stage - 1][rows - stage - 1] = 1 / (Matr[rows-stage][rows - stage - 1]);
 		}
 		else {
-			MatrB[n - stage - 1][j] = -1 * (Matr[n-stage][j] / Matr[n-stage][n - stage - 1]);
+			MatrB[rows - stage - 1][j] = -1 * (Matr[rows-stage][j] / Matr[rows-stage][rows - stage - 1]);
 		}
 	}
-	return MatrB;
+	if (stage == 1) {
+		MatrBN = MatrB;
+	}
+	else {
+		MatrBN = multiplyMatrix(MatrBN, rows, rows, MatrB, rows, rows);
+	}
 }
 
 double** matrix::calculateMatrixBReverse(double** Matr, int n,int stage)
@@ -65,45 +70,48 @@ double** matrix::calculateMatrixBReverse(double** Matr, int n,int stage)
 	}
 	return MatrReverse;
 }
-double** matrix::calculateMatrixP(double** Matr, double**& similarMatrix, int n) {
-	//add Matr copy
+void matrix::calculateMatrixP() {
 	double** MatrD = Matr;
+	vector<double> p;
 	int k = 0;
-	for (int i = 1; i < n; i++) {
-		double** MatrB = calculateMatrixB(Matr, n, i);
-		if (k >= 1) {
-			similarMatrix = matrix::multiplyMatrix(similarMatrix, n, n, MatrB, n, n);
-		}
+	for (int i = 1; i < rows; i++) {
+		calculateMatrixB(i);
 		cout << "B:" << endl;
-		View::outputMatr(MatrB, n, n);
-		double** MatrBReverse = calculateMatrixBReverse(Matr, n,i);
+		View::outputMatr(MatrB, rows, rows);
+		double** MatrBReverse = calculateMatrixBReverse(Matr, rows,i);
 		cout << "B reverse:" << endl;
-		View::outputMatr(MatrBReverse, n, n);
-		MatrD = matrix::multiplyMatrix(matrix::multiplyMatrix(MatrBReverse, n, n, Matr, n, n), n, n, MatrB, n, n);
+		View::outputMatr(MatrBReverse, rows, rows);
+		MatrD = matrix::multiplyMatrix(matrix::multiplyMatrix(MatrBReverse, rows, rows, Matr, rows, rows), rows, rows, MatrB, rows, rows);
 		Matr = MatrD;
 		cout << "D:" << endl;
-		View::outputMatr(MatrD, n, n);
+		View::outputMatr(MatrD, rows, rows);
 		k++;
 	}
-	return MatrD;
+	for (int i = 0; i < rows; i++)p.push_back(MatrD[0][i]);
+	this->p = p;
 }
-void matrix::createSelfVectors(Root roots,double** MatrB) {
-	for (int i = 0; i < roots.num; i++) {
-		double** tempMatr = new double*[roots.num];
-		for (int j = 0; j < roots.num; j++) {
+void matrix::createSelfVectors() {
+	for (int i = 0; i < rows; i++) {
+		double** tempMatr = new double*[rows];
+		for (int j = 0; j < rows; j++) {
 			tempMatr[j] = new double[1];
 		}
-		for (int k = 0; k < roots.num; k++) {
-			double temp = round(real(roots.mas[i])*1000)/1000;
+		for (int k = 0; k < rows; k++) {
+			double temp = real(r.mas[i]);
 			cout << endl << "temp: " << temp << endl;
-			tempMatr[k][0] = pow(temp, roots.num - k - 1);
+			tempMatr[k][0] = round(pow(temp, rows - k - 1)*1000)/1000;
 		}cout << "Y" << i+1 << ":" << endl;
-		View::outputMatr(tempMatr, roots.num, 1);
-		double** tempMatr2 = matrix::multiplyMatrix(MatrB, 4, 4, tempMatr, 4, 1);
-		View::outputMatr(tempMatr2, 4, 1);
-		matrix::toNorm(tempMatr2, 4);
-		View::outputMatr(tempMatr2, 4, 1);
+		View::outputMatr(tempMatr, rows, 1);
+		View::outputMatr(MatrBN,rows , rows);
+		double** tempMatr2 = matrix::multiplyMatrix(MatrBN, rows, rows, tempMatr, rows, 1);
+		View::outputMatr(tempMatr2, rows, 1);
+		matrix::toNorm(tempMatr2, rows);
+		View::outputMatr(tempMatr2, rows, 1);
+		vectorsX.push_back(tempMatr2);
 	}
+}
+int matrix::getRows() {
+	return rows;
 }
 void matrix::toNorm(double** Matr, int rows) {
 	double sum = 0;

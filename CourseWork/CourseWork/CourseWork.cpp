@@ -14,28 +14,26 @@ typedef std::complex<double> complex;
 
 int main()
 {
-	/*double** similarMatrix = matrix::calculateMatrixB(Matr, n, 1);
-	double** MatrP = matrix::calculateMatrixP(Matr, similarMatrix, n);
-	std::cout << "Matr P: " << std::endl;
-	View::outputMatr(MatrP, n, n);
-	std::cout << "Matr B:" << std::endl;
-	View::outputMatr(similarMatrix, n, n);
-	setlocale(LC_ALL, "Russian");
-	Polinom p(MatrP, n);
-	Root r;
-	Polinom::FindAllRoot(p, r);
-	matrix::createSelfVectors(r, similarMatrix);
-	*/
-	int n;
+	int k, n;
+	std::cout << "input k " << std::endl;
+	std::cin >> k;
 	std::cout << "Input the number of raws and columns:" << std::endl;
 	std::cin >> n;
 	srand(time(0));
 	matrix Matrix(n);
-	Matrix.Matr = fileReader::inputMatr(Matrix.rows);
-	View::outputMatr(Matrix.Matr, Matrix.rows, Matrix.rows);
-	Matrix.findSystem();
-	Matrix.Kramer();
-	Matrix.findRoots();
-	Matrix.findQ();
-	Matrix.findVectorsX();
+	Matrix.Matr = fileReader::inputMatr(Matrix.getRows());
+	if (k == 1) {
+		View::outputMatr(Matrix.Matr, Matrix.getRows(), Matrix.getRows());
+		Matrix.calculateMatrixP();
+		Matrix.findRoots();
+		Matrix.createSelfVectors();
+	}
+	else {
+		View::outputMatr(Matrix.Matr, Matrix.getRows(), Matrix.getRows());
+		Matrix.findSystem();
+		Matrix.Kramer();
+		Matrix.findRoots();
+		Matrix.findQ();
+		Matrix.findVectorsX();
+	}
 }
