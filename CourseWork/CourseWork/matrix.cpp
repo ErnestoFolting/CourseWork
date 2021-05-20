@@ -116,7 +116,7 @@ void matrix::toNorm(double** Matr, int rows) {
 		Matr[i][0] = round(Matr[i][0] / sum*1000)/1000;
 	}
 }
-void matrix::findSystem(double** Matr, int rows) {
+void matrix::findSystem() {
 	double** startVector2 = new double* [rows];
 	double** system = new double* [rows];
 	for (int i = 0; i < rows; i++) {
@@ -147,20 +147,21 @@ void matrix::findSystem(double** Matr, int rows) {
 	View::outputMatr(system, rows, rows+1);
 	this->system = system;
 }
-vector<double> matrix::Kramer(double** Matr,int rows ) {
-	vector<double> p;
+void matrix::Kramer() {
 	double** roots = new double* [rows];
 	double** main = new double* [rows];
 	for (int i = 0; i < rows; i++) {
 		roots[i] = new double[1];
-		roots[i][0] = Matr[i][rows];
+		roots[i][0] = system[i][rows];
 		main[i] = new double[rows];
 		for (int j = 0; j < rows; j++) {
-			main[i][j] = Matr[i][j];
+			main[i][j] = system[i][j];
 		}
 	}
 	double mainDet = det(main, rows);
+	cout << " Check6" << endl;
 	View::outputMatr(roots, rows, 1);
+	cout << " Check7" << endl;
 	View::outputMatr(main, rows, rows);
 	for (int l = 0; l < rows; l++) {
 		double** tempMatr = new double* [rows];
@@ -177,9 +178,9 @@ vector<double> matrix::Kramer(double** Matr,int rows ) {
 		}
 		double tempDet = det(tempMatr, rows);
 		double root = round(tempDet / mainDet*1000)/1000;
-		p.push_back(root);
+		cout << "root" << root << endl;
+		this->p.push_back(root);
 	}
-	return p;
 }
 double matrix::det(double** Matr, int N)
 {

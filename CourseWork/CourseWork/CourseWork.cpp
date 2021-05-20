@@ -32,26 +32,20 @@ int main()
 	srand(time(0));
 	matrix Matrix(n);
 	Matrix.Matr = fileReader::inputMatr(Matrix.rows);
-	View::outputMatr(Matrix.Matr, n, n);
-	Matrix.findSystem(Matrix.Matr, n);
-	std::vector<double> roots = matrix::Kramer(Matrix.system, n);
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 5; j++) {
-			std::cout << Matrix.system[i][j] << std:: endl;
-		}
+	View::outputMatr(Matrix.Matr, Matrix.rows, Matrix.rows);
+	Matrix.findSystem();
+	Matrix.Kramer();
+	for (int i = 0; i < Matrix.p.size(); i++) {
+		std::cout << "Root: " << Matrix.p[i] << std::endl;
 	}
-	for (int i = 0; i < roots.size(); i++) {
-		std::cout << "Root:" << roots[i] << std::endl;
-	}
-	Polinom polinom(roots);
+	Polinom polinom(Matrix.p);
 	Root r;
 	Polinom::FindAllRoot(polinom, r);
 	for (int k = 0; k < r.num; k++) {
 		double temp = round(real(r.mas[k]) * 1000) / 1000;
 		std::cout << std::endl << "temp: " << temp << std::endl;
-		//matrix::findY(Matr, n, n );
 	} 
-	Matrix.findQ(roots, r, n);
+	Matrix.findQ(Matrix.p, r, n);
 	Matrix.findVectorsX();
 
 }

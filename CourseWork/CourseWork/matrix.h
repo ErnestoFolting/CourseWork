@@ -9,7 +9,9 @@ public:
 	int rows;
 	int columns;
 	double** system;
+	std::vector<double> p;
 	double** q;
+	Root r;
 	std::vector<double**> vectorsY;
 	std::vector<double**> vectorsX;
 	matrix(int n):rows(n),columns(n){}
@@ -21,8 +23,8 @@ public:
 	static double** calculateMatrixP(double** Matr, double**& similarMatrix, int n);
 	static void createSelfVectors(Root roots, double** MatrB);
 	static void toNorm(double** Matr, int rows);
-	void findSystem(double** Matr, int rows);
-	static std::vector<double>Kramer(double** Matr, int rows);
+	void findSystem();
+	void Kramer();
 	static double det(double** matr, int N);
 	void findQ(std::vector<double> roots, Root selfNumbers, int rows);
 	void findVectorsX();
