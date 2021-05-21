@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="CourseWork.cpp" />
     <ClCompile Include="fileReader.cpp" />
+    <ClCompile Include="fileWriter.cpp" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="Polinom.cpp" />
     <ClCompile Include="Validator.cpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fileReader.h" />
+    <ClInclude Include="fileWriter.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="Polinom.h" />
     <ClInclude Include="Root.h" />

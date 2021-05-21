@@ -41,5 +41,6 @@ public:
 	matrix operator*(double x);
 	matrix operator+(matrix tempMatr);
 	matrix operator-(matrix tempMatr);
+	friend class fileWriter;
 };
 

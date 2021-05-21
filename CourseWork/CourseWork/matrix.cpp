@@ -1,5 +1,6 @@
 #include "matrix.h"
 #include "Validator.h"
+#include "fileWriter.h"
 #include <complex>
 #include <vector>
 #include "View.h"
@@ -127,20 +128,23 @@ void matrix::calculateMatrixP() {
 	this->p = p;
 }
 void matrix::Danilevsky() {
+	fileWriter::outputMatr(*this);
 	View::outputMatr(Matr, rows, rows);
 	calculateMatrixP();
 	findRoots();
 	createSelfVectors();
+	fileWriter::outputSelf(*this);
 }
 
 void matrix::Krylov() {
-
 	View::outputMatr(Matr, rows, rows);
+	fileWriter::outputMatr(*this);
 	findSystem();
 	Kramer();
 	findRoots();
 	findQ();
 	findVectorsX();
+	fileWriter::outputSelf(*this);
 }
 void matrix::createSelfVectors() {
 	for (int i = 0; i < rows; i++) {
