@@ -36,6 +36,8 @@ void Polinom::FindAllRoot(Polinom& pp, Root& r)
         } while (abs(Polinom::FPol(p, x1)) > 1e-12);
 
         r.mas[i] = x1;
+        if (imag(r.mas[i]) > 1e-10)exit(2);
+        std:: cout << "check2" << r.mas[i] << std::endl;
 
         for (j = p.n - 1; j >= 0; j--) p.mas[j] = p.mas[j] + p.mas[j + 1] * x1;
         for (j = 0; j < p.n; j++) p.mas[j] = p.mas[j + 1];

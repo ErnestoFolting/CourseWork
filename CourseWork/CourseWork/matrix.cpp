@@ -359,5 +359,8 @@ void matrix::findRoots() {
 	Polinom polinom(this->p);
 	Root r;
 	Polinom::FindAllRoot(polinom, r);
+	for (int i = 0; i < r.num; i++) {
+		cout << "self:" << real(r.mas[i]) << endl;
+	}
 	this->r = r;
 }
