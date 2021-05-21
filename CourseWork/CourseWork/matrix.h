@@ -16,8 +16,10 @@ class matrix
 	double** MatrBN;
 	double** MatrB;
 	int rows;
-public:
 	double** Matr;
+public:
+	double** getMatr();
+	void setMatr(double** tempMatr);
 	int getRows();
 	matrix(int n):rows(n),columns(n){}
 	matrix(int n, int m):rows(n),columns(m){}
@@ -34,6 +36,8 @@ public:
 	static double det(double** matr, int N);
 	void findQ();
 	void findVectorsX();
+	void Danilevsky();
+	void Krylov();
 	matrix operator*(double x);
 	matrix operator+(matrix tempMatr);
 	matrix operator-(matrix tempMatr);

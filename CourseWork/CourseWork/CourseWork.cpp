@@ -21,19 +21,11 @@ int main()
 	std::cin >> n;
 	srand(time(0));
 	matrix Matrix(n);
-	Matrix.Matr = fileReader::inputMatr(Matrix.getRows());
+	Matrix.setMatr(fileReader::inputMatr(Matrix.getRows()));
 	if (k == 1) {
-		View::outputMatr(Matrix.Matr, Matrix.getRows(), Matrix.getRows());
-		Matrix.calculateMatrixP();
-		Matrix.findRoots();
-		Matrix.createSelfVectors();
+		Matrix.Danilevsky();
 	}
 	else {
-		View::outputMatr(Matrix.Matr, Matrix.getRows(), Matrix.getRows());
-		Matrix.findSystem();
-		Matrix.Kramer();
-		Matrix.findRoots();
-		Matrix.findQ();
-		Matrix.findVectorsX();
+		Matrix.Krylov();
 	}
 }

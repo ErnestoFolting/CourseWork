@@ -84,11 +84,63 @@ void matrix::calculateMatrixP() {
 		MatrD = matrix::multiplyMatrix(matrix::multiplyMatrix(MatrBReverse, rows, rows, Matr, rows, rows), rows, rows, MatrB, rows, rows);
 		Matr = MatrD;
 		cout << "D:" << endl;
+		double currentD;
+		if (rows - 3 - k >= 0) {
+			currentD = MatrD[rows - i - 1][rows - 3 - k];
+			cout << "5" << " " << rows - 3 - k << " " << currentD<< endl;
+			if (currentD == 0) {
+				bool flag = false;
+				for (int j = 0; j < rows - 3 - k; j++) {
+					if (MatrD[rows - i - 1][j] != 0) {
+						flag = true;
+						for (int l = 0; l < rows; l++) {
+							double temp = MatrD[l][rows - 3 - k];
+							MatrD[l][rows - 3 - k] = MatrD[l][j];
+							MatrD[l][j] = temp;
+							double temp2 = MatrD[rows - 3 - k][l];
+							MatrD[rows - 3 - k][l] = MatrD[j][l];
+							MatrD[j][l] = temp2;
+						}
+						matrix newMatr(rows);
+						newMatr.setMatr(MatrD);
+						newMatr.Danilevsky();
+					}
+				}
+				if (flag == false) {
+					double** tempMatr = new double*[rows - 3 - k + 1];
+					for (int u = 0; u < rows - 3 - k + 1; u++)tempMatr[u] = new double[rows - 3 - k + 1];
+					for (int h = 0; h < rows - 3 - k + 1; h++) {
+						for (int t = 0; t < rows - 3 - k + 1; t++) {
+							tempMatr[h][t] = MatrD[h][t];
+						}
+					}
+					matrix newMatr(rows - 3 - k + 1);
+					newMatr.setMatr(tempMatr);
+					newMatr.Danilevsky();
+				}
+			}
+		}
 		View::outputMatr(MatrD, rows, rows);
 		k++;
 	}
 	for (int i = 0; i < rows; i++)p.push_back(MatrD[0][i]);
 	this->p = p;
+}
+void matrix::Danilevsky() {
+	View::outputMatr(Matr, rows, rows);
+	calculateMatrixP();
+	findRoots();
+	createSelfVectors();
+}
+
+void matrix::Krylov() {
+
+	View::outputMatr(Matr, rows, rows);
+	findSystem();
+	Kramer();
+	findRoots();
+	findQ();
+	findVectorsX();
 }
 void matrix::createSelfVectors() {
 	for (int i = 0; i < rows; i++) {
@@ -109,6 +161,14 @@ void matrix::createSelfVectors() {
 		View::outputMatr(tempMatr2, rows, 1);
 		vectorsX.push_back(tempMatr2);
 	}
+}
+double** matrix::getMatr()
+{
+	return Matr;
+}
+void matrix::setMatr(double** tempMatr)
+{
+	Matr = tempMatr;
 }
 int matrix::getRows() {
 	return rows;
